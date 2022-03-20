@@ -1,8 +1,3 @@
-function round (num, numdec)
-    local multi = 10^(numdec or 0)
-    return math.floor(num * multi + 0.5) / multi
-end
-
 function onTick()
     heading = input.getNumber(1)
     tilt_f = (input.getNumber(2)*4)*90
@@ -32,8 +27,8 @@ function onTick()
     else
         altitude = math.floor(altitude)
     end
-    r_altitude = round(altitude, -2)
-    r_speed = round(speed, -2)
+    r_altitude = math.floor(altitude)
+    r_speed = math.floor(speed)
 end
 
 function onDraw()

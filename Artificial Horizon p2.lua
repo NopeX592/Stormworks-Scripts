@@ -5,8 +5,8 @@ end
 
 function onTick()
     heading = input.getNumber(1)
-    tilt_f = (input.getNumber(2)*4)*90
-    tilt_l = (input.getNumber(3)*4)*90
+    tilt_f = (input.getNumber(5)*10)*90
+    tilt_l = (input.getNumber(6)*10)*90
     altitude = input.getNumber(4)
     speed = input.getNumber(5)
 end

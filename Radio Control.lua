@@ -2,7 +2,8 @@ i14Toggled = false
 i15Toggled = false
 i18Toggled = false
 i18ToggledP = false
-ch_num = 0
+isLocked = false
+frequency = 0
 
 function onTick()
     isP1 = input.getBool(1)
@@ -12,8 +13,6 @@ function onTick()
     signal_strength = input.getNumber(1)
     time = input.getNumber(2)
     time = math.floor(time) + 0.60*(time-math.floor(time))
-    frequency = input.getNumber(7)/10
-    frequency = math.floor(frequency)
     
     in1X = input.getNumber(3)
     in1Y = input.getNumber(4)
@@ -22,21 +21,34 @@ function onTick()
 
     shift = property.getNumber("Radio Side Shift")
 
-    if (isP1 and isInRect(25+shift,25,7,7,in1X,in1Y)) or (isP2 and isInRect(25+shift,25,7,7,in2X,in2Y)) then
-        i14Toggled=true
-        output.setBool(3, i14Toggled)
-    else
-        i14Toggled=false
+    if not (iPBu or iPBd) then
+    	isLocked = false
     end
 
-    if (isP1 and isInRect(0+shift,25,8,7,in1X,in1Y)) or (isP2 and isInRect(0+shift,25,8,7,in2X,in2Y)) then
-        i15Toggled=true
-        output.setBool(4, i15Toggled)
-    else
-        i15Toggled=false
+    iPBu = (isP1 or isP2) and isInRect(25+shift, 25, 8, 7, in1X, in1Y)
+    iPBd = (isP1 or isP2) and isInRect(0+shift, 25, 8, 7, in1X, in1Y)
+
+    if not isLocked then
+        if iPBu then
+            frequency = frequency + 1
+            if frequency == 9 then
+                frequency = 0
+            end
+        end
+
+        if iPBd then
+            frequency = frequency - 1
+            if frequency == -1 then
+                frequency = 8
+            end
+        end
+        frequency = math.floor(frequency)
+        output.setNumber(7, frequency)
+
+        isLocked = true
     end
 
-    if (isP1 and isInRect(8+shift,25,17,7,in1X,in1Y)) or (isP2 and isInRect(8+shift,25,17,7,in2X,in2Y)) then
+    if (isP1 and isInRect(7+shift,25,17,7,in1X,in1Y)) or (isP2 and isInRect(8+shift,25,17,7,in2X,in2Y)) then
         i18ToggledP=true
         output.setBool(2, i18ToggledP)
     end
@@ -56,17 +68,17 @@ function onDraw()
     screen.drawRectF(26+shift,9,6,9)
 
     setC(96,96,96)
-    screen.drawTextBox(0+shift, 0, 32, 9, time, 0, 0)
+    screen.drawTextBox(0+shift, 0, 32, 9, string.format("%.2f", time), 0, 0)
     screen.drawTextBox(0+shift, 9, 16, 9, "CH:", 0, 0)
     screen.drawTextBox(26+shift, 9, 6, 9, frequency, 0, 0)
 
     setC(0,0,0)
     screen.drawRectF(25+shift,25,7,7)
-    screen.drawRectF(25+shift,25,7,7)text=">"
+    screen.drawRectF(25+shift,25,8,7)text=">"
     if i14Toggled then
         text=">"
     end
-    if i14Toggled then
+    if iPBu then
         setC(0,96,1)
         screen.drawRectF(25+shift, 25, 7, 7)
     end
@@ -84,7 +96,7 @@ function onDraw()
     if i15Toggled then
         t="<"
     end
-    if i15Toggled then
+    if iPBd then
         setC(96,0,0)
         screen.drawRectF(0+shift, 25, 8, 7)
     end
@@ -137,7 +149,7 @@ function onDraw()
     end
 
     setC(0,0,0)
-    screen.drawRectF(8+shift,25,17,7)text="SPK"
+    screen.drawRectF(7+shift,25,17,7)text="SPK"
     if i18Toggled then
         text="SPK"
     end
