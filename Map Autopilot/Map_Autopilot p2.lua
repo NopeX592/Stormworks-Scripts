@@ -1,24 +1,16 @@
-zoo = 5
 button_size = 6
 
 function onTick()
     inputX = input.getNumber(3)
 	inputY = input.getNumber(4)
     isPressed = input.getBool(1)
-    buttonPressed = input.getBool(4)
 
-    worldX = input.getNumber(5)
-    worldY = input.getNumber(6)
-    x = input.getNumber(7)
-    y = input.getNumber(8)
-    zoom = input.getNumber(9)
-    pixelX, pixelY = map.mapToScreen(x+worldX, y+worldY, zoo^zoom, 64, 96, worldX, worldY)
-
-    if isPressed and buttonPressed then
-        worldWPX, worldWPY = map.screenToMap(inputX, inputY, zoo^zoom, 64, 96, pixelX, pixelY)    
-        output.setNumber(9, worldWPX)
-        output.setNumber(10, worldWPY)
-    end
+    worldX = input.getNumber(7)
+    worldY = input.getNumber(8)
+    x_off = input.getNumber(9)
+    y_off = input.getNumber(10)
+    zoom = input.getNumber(11)
+    pixelX, pixelY = map.mapToScreen(x_off+worldX, y_off+worldY, zoom, 64, 64, worldX, worldY)
 end
 
 function onDraw()
@@ -34,52 +26,50 @@ function onDraw()
 	screen.setMapColorGrass(64,85,48)
 	screen.setMapColorSand(100,93,41)
 	screen.setMapColorSnow(200,200,200)
-	screen.drawMap(x+worldX, y+worldY, zoo^zoom)
+	screen.drawMap(x_off+worldX, y_off+worldY, zoom)
 
     --Draw Player
-    screen.setColor(200, 20, 20)
-    screen.drawRect(pixelX, pixelY, 2, 2)
-    screen.setColor(250, 10, 10, 50)
-    screen.drawRect(pixelX-1, pixelY-1, 4, 4)
-    screen.setColor(255, 255, 255, 100)
-    screen.drawCircleF(pixelX+1, pixelY+1, 1)
+    screen.setColor(200,20,20,100)
+    screen.drawRectF(pixelX-3, pixelY-3, button_size, button_size)
+    screen.setColor(200,20,20)
+    screen.drawRectF(pixelX-2, pixelY-2, button_size-2, button_size-2)
 
     --Draw Coordinates
     screen.setColor(0,0,0)
-    screen.drawTextBox(2, 1, 28, button_size, math.floor(worldX), -1, 0)
-    screen.drawTextBox(34, 1, 28, button_size, math.floor(worldX), -1, 0)
+    screen.drawTextBox(1, 1, 28, button_size, math.floor(worldX), -1, 0)
+    screen.drawTextBox(31, 1, 28, button_size, math.floor(worldY), -1, 0)
 
     --Draw Zoom
     screen.setColor(0,0,0)
-    screen.drawTextBox(58, 5, button_size, button_size, "+", 1, 1)
-    screen.drawTextBox(58, 11, button_size, button_size, "-", 1, 1)
-    screen.drawRect(58, 5, button_size, button_size)
-    screen.drawRect(58, 11, button_size, button_size)
+    screen.drawTextBox(57, 5, button_size, button_size, "+", 1, 1)
+    screen.drawTextBox(57, 11, button_size, button_size, "-", 1, 1)
+    screen.drawRect(57, 5, button_size, button_size)
+    screen.drawRect(57, 11, button_size, button_size)
 
-    screen.drawLine(61, 20, 61, 42)
+    screen.drawLine(60, 20, 60, 42)
     
     screen.setColor(200,20,20)
-    screen.drawRectF(59, (zoo^zoom * 19/50) + 20, 5, 3)
+    screen.drawRectF(58, (5^zoom * 19/50) + 20, 5, 3)
 
     --Draw Panning Buttons
     screen.setColor(0,0,0)
-    screen.drawTextBox(58, 49, button_size, button_size, "+", 1, 1)
-    screen.drawTextBox(46, 49, button_size, button_size, "-", 1, 1)
-    screen.drawTextBox(52, 43, button_size, button_size, "+", 1, 1)
-    screen.drawTextBox(52, 55, button_size, button_size, "-", 1, 1)
-    screen.drawRect(58, 49, button_size, button_size)
-    screen.drawRect(46, 49, button_size, button_size)
-    screen.drawRect(52, 43, button_size, button_size)
-    screen.drawRect(52, 55, button_size, button_size)
+    screen.drawTextBox(57, 49, button_size, button_size, "+", 1, 1)
+    screen.drawTextBox(45, 49, button_size, button_size, "-", 1, 1)
+    screen.drawTextBox(51, 43, button_size, button_size, "+", 1, 1)
+    screen.drawTextBox(51, 55, button_size, button_size, "-", 1, 1)
+    screen.drawRect(57, 49, button_size, button_size)
+    screen.drawRect(45, 49, button_size, button_size)
+    screen.drawRect(51, 43, button_size, button_size)
+    screen.drawRect(51, 55, button_size, button_size)
 
     --Draw Map Control Buttons
     screen.setColor(0,0,0)
-    screen.drawTextBox(7, 43, button_size, button_size, "S", 1, 1)
-    screen.drawTextBox(7, 55, button_size, button_size, "R", 1, 1)
-    screen.drawRect(7, 43, button_size, button_size)
-    screen.drawRect(7, 55, button_size, button_size)
-    
-    --blocker rectangle
-    screen.setColor(0,0,0)
-    screen.drawRectF(w/3*2+1, 0, w/3, h)
+    screen.drawTextBox(-1, 49, button_size, button_size, "R", 1, 1)
+    screen.drawTextBox(12, 49, button_size, button_size, "B", 1, 1)
+    screen.drawTextBox(5, 43, button_size, button_size, "S", 1, 1)
+    screen.drawTextBox(5, 55, button_size, button_size, "C", 1, 1)
+    screen.drawRect(0, 49, button_size, button_size)
+    screen.drawRect(12, 49, button_size, button_size)
+    screen.drawRect(6, 43, button_size, button_size)
+    screen.drawRect(6, 55, button_size, button_size)
 end

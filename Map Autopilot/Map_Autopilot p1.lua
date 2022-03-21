@@ -1,37 +1,47 @@
-zoo = 5
-zoom = -1.431
-x = 0
-y = 0
-button_size = 6
+zoom = -0.5
+x_off = 0
+y_off = 0
+button_size = 8
+isLocked = false
 
 function onTick()
     inputX = input.getNumber(3)
 	inputY = input.getNumber(4)
 	isPressed = input.getBool(1)
 
-    worldX = input.getNumber(5)
-    worldY = input.getNumber(6)
+    worldX = input.getNumber(7)
+    worldY = input.getNumber(8)
 
-    output.setBool(4, false)
+    if not (isPressingBack) then
+        isLocked = false
+    end
 
-	--Map Snap Controls
-	isPressingStart = isPressed and isPntInRect(inputX, inputY, 7, 43, button_size, button_size)
-	isPressingCenter = isPressed and isPntInRect(inputX, inputY, 7, 55, button_size, button_size)
+    --Reset
+    isPressingReset = isPressed and isPntInRect(inputX, inputY, 0, 49, button_size, button_size)
+	--Back
+    if not isLocked then
+        isPressingBack = isPressed and isPntInRect(inputX, inputY, 12, 49, button_size, button_size)
+        isLocked = true
+    end
+    --Start Autopilot
+    isPressingStart = isPressed and isPntInRect(inputX, inputY, 6, 43, button_size, button_size)
 
     --Center
-	if isPressingCenter then
-        x = 0
-        y = 0
+    isPressingCenter = isPressed and isPntInRect(inputX, inputY, 6, 55, button_size, button_size)
+
+    if isPressingCenter then
+       x_off = 0
+       y_off = 0
     end
 
     --Zoom
-	isPressingZoomIn = isPressed and isPntInRect(inputX, inputY, 58, 5, button_size, button_size)
-	isPressingZoomOut = isPressed and isPntInRect(inputX, inputY, 58, 11, button_size, button_size)
+	isPressingZoomIn = isPressed and isPntInRect(inputX, inputY, 56, 5, button_size, button_size)
+	isPressingZoomOut = isPressed and isPntInRect(inputX, inputY, 56, 11, button_size, button_size)
 	
 	if isPressingZoomIn then
-		zoom = zoom + 0.01
-	elseif isPressingZoomOut then
 		zoom = zoom - 0.01
+	elseif isPressingZoomOut then
+		zoom = zoom + 0.01
 	end
     if zoom < -1.431 then
         zoom = -1.431
@@ -41,32 +51,36 @@ function onTick()
     end
 	
     --Panning
-	isPressingXPlus = isPressed and isPntInRect(inputX, inputY, 58, 49, button_size, button_size)
-	isPressingXMinus = isPressed and isPntInRect(inputX, inputY, 46, 49, button_size, button_size)
-	isPressingYPlus = isPressed and isPntInRect(inputX, inputY, 52, 43, button_size, button_size)
-	isPressingYMinus = isPressed and isPntInRect(inputX, inputY, 52, 55, button_size, button_size)
+	isPressingXPlus = isPressed and isPntInRect(inputX, inputY, 56, 49, button_size, button_size)
+	isPressingXMinus = isPressed and isPntInRect(inputX, inputY, 44, 49, button_size, button_size)
+	isPressingYPlus = isPressed and isPntInRect(inputX, inputY, 50, 43, button_size, button_size)
+	isPressingYMinus = isPressed and isPntInRect(inputX, inputY, 50, 55, button_size, button_size)
 
     if isPressingXPlus then
-        x = x + 0.75*(zoo^(zoom + 1.431))
+        x_off = x_off + 0.75*5^(zoom + 1.431)
     elseif isPressingXMinus then
-        x = x - 0.75*(zoo^(zoom + 1.431))
+        x_off = x_off - 0.75*5^(zoom + 1.431)
     end
 
     if isPressingYPlus then
-        y = y + 0.75*(zoo^(zoom + 1.431))
+        y_off = y_off + 0.75*5^(zoom + 1.431)
     elseif isPressingYMinus then
-        y = y - 0.75*(zoo^(zoom + 1.431))
+        y_off = y_off - 0.75*5^(zoom + 1.431)
     end
 
     --Set Outputs
-    output.setNumber(7, x)
-    output.setNumber(8, y)
-    output.setNumber(9, zoom)
+    output.setNumber(9, x_off)
+    output.setNumber(10, y_off)
+    output.setNumber(11, zoom)
 
     output.setBool(3, isPressingStart)
+    output.setBool(4, isPressingReset)
+    output.setBool(5, isPressingBack)
 
-    if not (isPressingStart or isPressingCenter or isPressingZoomIn or isPressingZoomOut or isPressingXPlus or isPressingXMinus or isPressingYPlus or isPressingYMinus) then
-        output.setBool(4, true)
+    if not (isPressingReset or isPressingBack or isPressingStart or isPressingCenter or isPressingZoomIn or isPressingZoomOut or isPressingXPlus or isPressingXMinus or isPressingYPlus or isPressingYMinus) then
+        worldWPX, worldWPY = map.screenToMap(x_off+worldX, y_off+worldY, zoom, 64, 64, inputX, inputY)
+        output.setNumber(12, worldWPX)
+        output.setNumber(13, worldWPY)
     end
 end
 
