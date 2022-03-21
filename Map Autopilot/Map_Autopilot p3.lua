@@ -29,10 +29,12 @@ function onTick()
     end
 
     --Back
-    if isPressingBack then
-        table.remove(arr_WPX, cycles)
-        table.remove(arr_WPY, cycles)
-        cycles = cycles - 1
+    if not (cycles == 0) then
+        if isPressingBack then
+            table.remove(arr_WPX, cycles)
+            table.remove(arr_WPY, cycles)
+            cycles = cycles - 1
+        end
     end
 
     --Add Waypoints to Array
