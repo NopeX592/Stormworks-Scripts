@@ -82,7 +82,7 @@ function onTick()
     output.setBool(4, isPressingReset)
     output.setBool(5, backPressed)
 
-    if not (isPressingReset or isPressingBack or isPressingStart or isPressingCenter or isPressingZoomIn or isPressingZoomOut or isPressingXPlus or isPressingXMinus or isPressingYPlus or isPressingYMinus) then
+    if isPressed and (not (isPressingReset or isPressingBack or isPressingStart or isPressingCenter or isPressingZoomIn or isPressingZoomOut or isPressingXPlus or isPressingXMinus or isPressingYPlus or isPressingYMinus)) then
         worldWPX, worldWPY = map.screenToMap(x_off+worldX, y_off+worldY, zoom, 64, 64, inputX, inputY)
         output.setNumber(12, worldWPX)
         output.setNumber(13, worldWPY)

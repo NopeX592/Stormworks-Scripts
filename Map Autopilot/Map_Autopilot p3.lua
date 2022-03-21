@@ -53,22 +53,24 @@ end
 
 function onDraw()
     --Draw Waypoint circles
-    i = 0
-    for i=0, cycles do
-        pixelWPX, pixelWPY = map.mapToScreen(x_off+worldX, y_off+worldY, zoom, 64, 64, arr_WPX[i], arr_WPY[i])
-        --Draw Circle
-        screen.setColor(200,20,20)
-        screen.drawCircle(pixelWPX, pixelWPY, circle_size)
-        --Draw Line
-        if (next(arr_WPX) == nil) or (next(arr_WPY) == nil) then
-            pixelWPX2, pixelWPY2 = map.mapToScreen(x_off+worldX, y_off+worldY, zoom, 64, 64, worldX, worldY)
-            screen.drawLine(pixelWPX, pixelWPY, pixelWPX2, pixelWPY2)
-            i = i + 1
-        else
-            i2 = i - 1
-            pixelWPX2, pixelWPY2 = map.mapToScreen(x_off+worldX, y_off+worldY, zoom, 64, 64, arr_WPX[i2], arr_WPY[i2])
-            screen.drawLine(pixelWPX, pixelWPY, pixelWPX2, pixelWPY2)
-            i = i + 1
+    if not ((next(arr_WPX) == nil) or (next(arr_WPY) == nil)) then
+        i = 0
+        for i=0, cycles do
+            pixelWPX, pixelWPY = map.mapToScreen(x_off+worldX, y_off+worldY, zoom, 64, 64, arr_WPX[i], arr_WPY[i])
+            --Draw Circle
+            screen.setColor(200,20,20)
+            screen.drawCircle(pixelWPX, pixelWPY, circle_size)
+            --Draw Line
+            if (next(arr_WPX) == nil) or (next(arr_WPY) == nil) then
+                pixelWPX2, pixelWPY2 = map.mapToScreen(x_off+worldX, y_off+worldY, zoom, 64, 64, worldX, worldY)
+                screen.drawLine(pixelWPX2, pixelWPY2, pixelWPX, pixelWPY)
+                i = i + 1
+            else
+                i2 = i - 1
+                pixelWPX2, pixelWPY2 = map.mapToScreen(x_off+worldX, y_off+worldY, zoom, 64, 64, arr_WPX[i2], arr_WPY[i2])
+                screen.drawLine(pixelWPX, pixelWPY, pixelWPX2, pixelWPY2)
+                i = i + 1
+            end
         end
     end
 end
