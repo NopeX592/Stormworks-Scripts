@@ -34,6 +34,29 @@ function onDraw()
 	screen.setMapColorSnow(200,200,200)
 	screen.drawMap(worldX, worldY, zoom)
 
+    --Draw Scanning Line
+    screen.setColor(0,255,0)
+    screen.drawLine(w/2, h/2, x1, 0)
+
+    --Draw Objects
+    if distance > 300 then
+    	distance = ((distance/300)*h/2)-16
+        rotV[rotation_Draw] = distance
+    end
+
+    if not off_button then
+        rotV = {}
+    end
+    
+    if rotation == -0.5 then
+        rotV = {}
+    end
+    
+    for rotF, distance in pairs(rotV) do
+        screen.setColor(255,255,0)
+        screen.drawRectF(w/2+(w/2-1)*math.cos(rotF-(math.pi/2)),distance,1,1)
+    end
+    
     --Draw Blocker Triangles
     screen.setColor(0,0,0)
     screen.drawTriangleF(w/2, h/2, 0, 0, 0, h)
@@ -48,28 +71,4 @@ function onDraw()
     screen.setColor(0,255,0)
     screen.drawLine(w/2, h/2, 0, 0)
     screen.drawLine(w/2, h/2, w, 0)
-
-    --Draw Scanning Line
-    screen.setColor(0,255,0)
-    screen.drawLine(w/2, h/2, x1, 0)
-
-    --Draw Objects
-    if distance < 300 then
-        rotV[rotation_Draw] = distance
-    end
-
-    if not off_button then
-        rotV = {}
-    end
-    
-    if rotation == -0.5 then
-        rotV = {}
-    end
-    
-    for rotF, distance in pairs(rotV) do
-        if distance > 0 then
-            screen.setColor(255,255,0,50)
-            screen.drawCircleF(h/2+distance*math.cos(rotF/25-(math.pi/2)),w/2+distance*math.sin(rotF/25-(math.pi/2)), 1)
-        end
-    end
 end
