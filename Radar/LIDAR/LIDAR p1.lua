@@ -17,6 +17,7 @@ function onTick()
         end
     end
     output.setNumber(1, sweep_angle)
+    output.setNumber(2, distance)
 end
 
 function onDraw()
@@ -40,7 +41,7 @@ function onDraw()
 
     --Draw Objects
     if distance > 300 then
-    	distance = ((distance/300)*h/2)-16
+    	distance = ((distance/300)*h/-2)+16
         rotV[rotation_Draw] = distance
     end
 
