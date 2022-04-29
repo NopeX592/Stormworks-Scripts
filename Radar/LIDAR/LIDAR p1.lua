@@ -26,21 +26,12 @@ function onDraw()
 
     x1 = w/2+(w/2-1)*math.cos(rotation_Draw-(math.pi/2))
 
-    --Draw Map	
-	screen.setMapColorOcean(14,46,48)
-	screen.setMapColorShallows(24,68,72)
-	screen.setMapColorLand(90,90,90)
-	screen.setMapColorGrass(64,85,48)
-	screen.setMapColorSand(100,93,41)
-	screen.setMapColorSnow(200,200,200)
-	screen.drawMap(worldX, worldY, zoom)
-
     --Draw Scanning Line
     screen.setColor(0,255,0)
     screen.drawLine(w/2, h/2, x1, 0)
 
     --Draw Objects
-    if distance > 300 then
+    if distance < 300 then
     	distance = ((distance/300)*h/-2)+16
         rotV[rotation_Draw] = distance
     end
@@ -55,7 +46,9 @@ function onDraw()
     
     for rotF, distance in pairs(rotV) do
         screen.setColor(255,255,0)
-        screen.drawRectF(w/2+(w/2-1)*math.cos(rotF-(math.pi/2)),distance,1,1)
+        x2 = distance * 2 * math.cos((rotF/(math.pi*2)))
+        y2 = distance * 2 * math.sin((rotF/(math.pi*2)))
+        screen.drawLine(w/2+(w/2-1)*math.cos(rotF-(math.pi/2)), distance, x2, y2)
     end
     
     --Draw Blocker Triangles
