@@ -9,7 +9,7 @@ function onTick()
     worldY = input.getNumber(3)
     zoom = input.getNumber(4)
     rotation = input.getNumber(5) * 4
-    rotation_Draw = input.getNumber(5) * (math.pi*2)
+    rotation_Draw = input.getNumber(5)
     
     if off_button then
         if rotation == sweep_angle then
@@ -24,7 +24,7 @@ function onDraw()
 	w = screen.getWidth()
 	h = screen.getHeight()
 
-    x1 = w/2+(w/2-1)*math.cos(rotation_Draw-(math.pi/2))
+    x1 = w/2+(w/2-1)*math.cos(rotation_Draw * (math.pi*2)-(math.pi/2))*1.5
 
     --Draw Scanning Line
     screen.setColor(0,255,0)
@@ -32,7 +32,6 @@ function onDraw()
 
     --Draw Objects
     if distance < 300 then
-    	distance = ((distance/300)*h/-2)+16
         rotV[rotation_Draw] = distance
     end
 
@@ -46,9 +45,13 @@ function onDraw()
     
     for rotF, distance in pairs(rotV) do
         screen.setColor(255,255,0)
-        x2 = distance * 2 * math.cos((rotF/(math.pi*2)))
-        y2 = distance * 2 * math.sin((rotF/(math.pi*2)))
-        screen.drawLine(w/2+(w/2-1)*math.cos(rotF-(math.pi/2)), distance, x2, y2)
+        rotL = rotF * (math.pi*2)
+    	distance = (distance/300)*16
+		x1 = math.sin(rotL) * distance + 16
+        y1 = -math.cos(rotL) * distance + 16
+        x2 = math.sin(rotL) * distance * 50 + 16
+        y2 = -math.cos(rotL) * distance * 50 + 16
+        screen.drawLine(x1, y1, x2, y2)
     end
     
     --Draw Blocker Triangles
