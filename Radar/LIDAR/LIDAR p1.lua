@@ -10,10 +10,10 @@ function onTick()
     zoom = input.getNumber(4)
     rotation = input.getNumber(5) * 4
     rotation_Draw = input.getNumber(5)
-    
+
     if off_button then
-        if rotation == sweep_angle then
-            sweep_angle = sweep_angle * -1
+        if math.abs(rotation) >= math.abs(sweep_angle) - 0.01 then
+            sweep_angle = -sweep_angle 
         end
     end
     output.setNumber(1, sweep_angle)
@@ -39,10 +39,10 @@ function onDraw()
         rotV = {}
     end
     
-    if rotation == -0.5 then
+    if rotation >= -sweep_angle + 0.02 then
         rotV = {}
     end
-    
+
     for rotF, distance in pairs(rotV) do
         screen.setColor(255,255,0)
         rotL = rotF * (math.pi*2)
