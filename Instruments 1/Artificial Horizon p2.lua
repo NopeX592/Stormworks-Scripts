@@ -14,8 +14,8 @@ end
 function onDraw()
 	w = screen.getWidth()
 	h = screen.getHeight()
-    cw = w/2
-    ch = h/2			
+    cw = w-48
+    ch = h-24
     ch_b = ch+(h/4)
 
     roll = math.rad(90 - tilt_l)
@@ -91,7 +91,4 @@ function onDraw()
 
     screen.setColor(255,0,0)
     screen.drawTriangleF(x1tr, y1tr, x2tr, y2tr, x3tr, y3tr)
-
-    screen.setColor(0,0,0) --blocker rectangle
-    screen.drawRectF(0, 0, w, ch)
 end

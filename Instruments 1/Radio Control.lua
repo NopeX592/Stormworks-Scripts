@@ -19,7 +19,7 @@ function onTick()
     in2X = input.getNumber(5)
     in2Y = input.getNumber(6)
 
-    shift = property.getNumber("Radio Side Shift")
+    shift = 0
 
     if not (iPBu or iPBd) then
     	isLocked = false

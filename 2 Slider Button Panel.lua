@@ -169,10 +169,10 @@ function onDraw()
         screen.drawRectF(0,11,16,10)
     elseif not reset1 then
         setC(255,255,255)
-        value1 = value1 * 10
-        value1 = math.floor(value1)
-        value1 = value1 / 10
-        screen.drawTextBox(0, 11, 16, 10, value1, 0, 0)
+        value11 = value1 * 10
+        value11 = math.floor(value11)
+        value11 = value11 / 10
+        screen.drawTextBox(0, 11, 16, 10, value11, 0, 0)
     end
 
     if reset2 then
@@ -180,10 +180,10 @@ function onDraw()
         screen.drawRectF(16,11,16,10)
     elseif not reset2 then
         setC(255,255,255)
-        value2 = value2 * 10
-        value2 = math.floor(value2)
-        value2 = value2 / 10
-        screen.drawTextBox(16, 11, 16, 10, value2, 0, 0)
+        value22 = value2 * 10
+        value22 = math.floor(value22)
+        value22 = value22 / 10
+        screen.drawTextBox(16, 11, 16, 10, value22, 0, 0)
     end
 end
 

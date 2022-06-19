@@ -42,4 +42,3 @@ function rotatePoint(cx,cy,angle,px,py)
     py=ynew+cy
     return {x=px,y=py}
 end
-

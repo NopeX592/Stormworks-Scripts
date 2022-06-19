@@ -5,7 +5,7 @@ function onTick()
     altitude = input.getNumber(4)
     speed = input.getNumber(5)
 
-    vel_conv = property.getBool("velocity conv")
+    vel_conv = property.getBool("Velocity Conv")
     if vel_conv then
         speed = speed * 1.9443844
     end
@@ -34,8 +34,8 @@ end
 function onDraw()
 	w = screen.getWidth()
 	h = screen.getHeight()
-    cw = w/2
-    ch = h/2			
+    cw = w-48
+    ch = h-24
     ch_b = ch+(h/4)
 
     rad = w+h
@@ -96,8 +96,5 @@ function onDraw()
 
     screen.setColor(0,0,0) --heading
     heading = math.floor(heading)
-    screen.drawTextBox(0, ch+1, w, 5, heading, 0, 0)
-
-    screen.setColor(0,0,0) --blocker rectangle
-    screen.drawRectF(0, 0, w, ch)
+    screen.drawTextBox(0, 1, w, 5, heading, 0, 0)
 end
