@@ -1,7 +1,7 @@
 function onTick()
 	fuel_level = input.getNumber(1)
     fuel_capacity = input.getNumber(2)
-	fuel_consumption= input.getNumber(2)
+	fuel_consumption= input.getNumber(3)
 
 	hrs = math.floor(fuel_consumption+0.5)/3600
 	round = hrs % 0.001
@@ -60,10 +60,9 @@ function onDraw()
 	setC(0,122,0) --draw green line
     screen.drawLine(8, h-2-green_height, 12, h-2-green_height)
 
-	screen.drawText(4, 4, math.floor((fuel_consumption+0.5)/60)) --draw remaining time
-	screen.drawText(4, 10, 'min')
-	screen.drawText(4, 16, hrs)
-	screen.drawText(4, 22, 'hrs')
+	setC(255,255,255)
+	screen.drawTextBox(10, 19, w-11, 7, math.floor((fuel_consumption+0.5)/60), 1, 0) --draw remaining time
+	screen.drawTextBox(10, 25, w-11, 7, "min", 1, 0)
 end
 
 function setC(r,g,b,a)
