@@ -11,6 +11,7 @@ function onTick()
 
     worldX = input.getNumber(7)
     worldY = input.getNumber(8)
+    cycles = input.getNumber(14)
 
     if not (isPressingBack) then
         isLocked = false
@@ -81,6 +82,11 @@ function onTick()
     output.setBool(3, isPressingStart)
     output.setBool(4, isPressingReset)
     output.setBool(5, backPressed)
+
+    if cycles == 0 then
+        worldWPX = worldX
+        worldWPY = worldY
+    end
 
     if isPressed and (not (isPressingReset or isPressingBack or isPressingStart or isPressingCenter or isPressingZoomIn or isPressingZoomOut or isPressingXPlus or isPressingXMinus or isPressingYPlus or isPressingYMinus)) then
         worldWPX, worldWPY = map.screenToMap(x_off+worldX, y_off+worldY, zoom, 64, 64, inputX, inputY)

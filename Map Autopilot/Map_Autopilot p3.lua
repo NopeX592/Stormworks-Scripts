@@ -28,10 +28,6 @@ function onTick()
         arr_WPY[cycles] = worldY
     end
 
-    --if cycles == 0 then
-
-    --end
-
     --Back
     if not (cycles == 0) then
         if isPressingBack then
@@ -53,21 +49,26 @@ function onTick()
     --Set Old Waypoints Values
     oldX = worldWPX
     oldY = worldWPY
+
+    --Set starting position
+    arr_WPX[0] = worldX
+    arr_WPY[0] = worldY
+
+    --Set Outputs
+    output.setBool(14, cycles)
 end
 
 function onDraw()
     --Draw Waypoint circles
     if not ((next(arr_WPX) == nil) or (next(arr_WPY) == nil)) then
         i = 0
-        for i=0, cycles do
+        for i=0, cycles-1 do
             pixelWPX, pixelWPY = map.mapToScreen(x_off+worldX, y_off+worldY, zoom, 64, 64, arr_WPX[i], arr_WPY[i])
             --Draw Circle
             screen.setColor(200,20,20)
             screen.drawCircle(pixelWPX, pixelWPY, circle_size)
             --Draw Line
-            if (next(arr_WPX) == nil) or (next(arr_WPY) == nil) then
-                pixelWPX2, pixelWPY2 = map.mapToScreen(x_off+worldX, y_off+worldY, zoom, 64, 64, worldX, worldY)
-                screen.drawLine(pixelWPX2, pixelWPY2, pixelWPX, pixelWPY)
+            if i == 0 then
                 i = i + 1
             else
                 i2 = i - 1
