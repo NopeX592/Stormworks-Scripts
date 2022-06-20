@@ -54,8 +54,17 @@ function onTick()
     arr_WPX[0] = worldX
     arr_WPY[0] = worldY
 
+    --Calculate Heading
+    relativeX = worldWPX - worldX
+    relativeY = worldWPY - worldY
+    relativeHyp = math.sqrt(relativeX^2+relativeY^2)
+
+    des_heading = math.asin(relativeX/relativeHyp)
+    des_heading = des_heading * 180/math.pi
+
     --Set Outputs
-    output.setBool(14, cycles)
+    output.setNumber(14, cycles)
+    output.setNumber(15, des_heading)
 end
 
 function onDraw()
