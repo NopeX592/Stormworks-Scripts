@@ -5,9 +5,6 @@ function onTick()
     off_button = input.getBool(1)
 
     distance = input.getNumber(1)
-    worldX = input.getNumber(2)
-    worldY = input.getNumber(3)
-    zoom = input.getNumber(4)
     rotation = input.getNumber(5) * 4
     rotation_Draw = input.getNumber(5)
 

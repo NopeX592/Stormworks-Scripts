@@ -36,7 +36,7 @@ function onDraw()
     text_range = set_range/100
     text_range = math.floor(text_range)
     text_range = text_range/10
-    screen.drawTextBox(0, 0, 24, 6, text_range, -1, 0)
+    screen.drawTextBox(0, 26, 24, 6, text_range, -1, 0)
 end
 
 function isPointInRectangle(x, y, rectX, rectY, rectW, rectH)
