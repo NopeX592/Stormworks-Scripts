@@ -28,6 +28,10 @@ function onTick()
         arr_WPY[cycles] = worldY
     end
 
+    --if cycles == 0 then
+
+    --end
+
     --Back
     if not (cycles == 0) then
         if isPressingBack then
