@@ -5,10 +5,14 @@ circle_size = 3
 
 cycles = 0
 
+WP_reached = false
+
 arr_WPX = {}
 arr_WPY = {}
 
 function onTick()
+    completion_radius = property.getNumber("Completion Radius")
+
     isPressed = input.getBool(1)
     isPressingReset = input.getBool(4)
     isPressingBack = input.getBool(5)
@@ -21,9 +25,11 @@ function onTick()
     zoom = input.getNumber(11)
     worldWPX = input.getNumber(12)
     worldWPY = input.getNumber(13)
+    distance_WP = input.getNumber(14)
 
     --Reset
     if isPressingReset then
+        WP_reached = false
         cycles = 0
         arr_WPX = {}
         arr_WPY = {}
@@ -57,18 +63,17 @@ function onTick()
     arr_WPX[0] = worldX
     arr_WPY[0] = worldY
 
-    --Remove Waypoint from Array
-    if isCompleted then
+    --Check Waypoint Completion and Remove Waypoints from Array
+    if distance_WP < completion_radius then
+        WP_reached = true
         table.remove(arr_WPX, 1)
         table.remove(arr_WPY, 1)
         cycles = cycles - 1
-        output.setBool(23,isCompleted)
     else
-        isCompleted = false
-        output.setBool(23,isCompleted)
+        WP_reached = false
     end
 
-    --Calculate Heading
+    --Calculate Relative Position
     if cycles >= 2 then
         first_wp = 1
 
@@ -79,19 +84,19 @@ function onTick()
         
         relativeX = WPX_Trig - worldX
         relativeY = WPY_Trig - worldY
-        relativeHyp = math.sqrt(relativeX^2+relativeY^2)
-        des_heading = math.asin(relativeX/relativeHyp)
-        des_heading = des_heading * 180/math.pi
-        --if des_heading < 0 then
-        --    des_heading = des_heading+360
-        --end
+    else
+        relativeX = 0 - worldX
+        relativeY = 0 - worldY
     end
 
     --Set Outputs
     output.setNumber(14, cycles)
-    output.setNumber(15, des_heading)
-    output.setNumber(16, WPX_Trig)
-    output.setNumber(17, WPY_Trig)
+    output.setNumber(15, relativeX)
+    output.setNumber(16, relativeY)
+    output.setNumber(17, WPX_Trig)
+    output.setNumber(18, WPY_Trig)
+
+    output.setBool(1, WP_reached)
 end
 
 function onDraw()
