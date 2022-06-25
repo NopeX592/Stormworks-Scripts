@@ -12,6 +12,7 @@ function onTick()
     isPressed = input.getBool(1)
     isPressingReset = input.getBool(4)
     isPressingBack = input.getBool(5)
+    isCompleted = input.getBool(6)
 
     worldX = input.getNumber(7)
     worldY = input.getNumber(8)
@@ -24,6 +25,8 @@ function onTick()
     --Reset
     if isPressingReset then
         cycles = 0
+        arr_WPX = {}
+        arr_WPY = {}
         arr_WPX[cycles] = worldX
         arr_WPY[cycles] = worldY
     end
@@ -54,6 +57,17 @@ function onTick()
     arr_WPX[0] = worldX
     arr_WPY[0] = worldY
 
+    --Remove Waypoint from Array
+    if isCompleted then
+        table.remove(arr_WPX, 1)
+        table.remove(arr_WPY, 1)
+        cycles = cycles - 1
+        output.setBool(23,isCompleted)
+    else
+        isCompleted = false
+        output.setBool(23,isCompleted)
+    end
+
     --Calculate Heading
     if cycles >= 2 then
         first_wp = 1
@@ -68,9 +82,9 @@ function onTick()
         relativeHyp = math.sqrt(relativeX^2+relativeY^2)
         des_heading = math.asin(relativeX/relativeHyp)
         des_heading = des_heading * 180/math.pi
-        if des_heading < 0 then
-            des_heading = des_heading+360
-        end
+        --if des_heading < 0 then
+        --    des_heading = des_heading+360
+        --end
     end
 
     --Set Outputs
