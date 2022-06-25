@@ -38,6 +38,7 @@ function onTick()
     if isPressingCenter then
        x_off = 0
        y_off = 0
+       zoom = -0.5
     end
 
     --Zoom
