@@ -55,16 +55,29 @@ function onTick()
     arr_WPY[0] = worldY
 
     --Calculate Heading
-    relativeX = worldWPX - worldX
-    relativeY = worldWPY - worldY
-    relativeHyp = math.sqrt(relativeX^2+relativeY^2)
+    if cycles >= 2 then
+        first_wp = 1
 
-    des_heading = math.asin(relativeX/relativeHyp)
-    des_heading = des_heading * 180/math.pi
+        WPX_Trig = arr_WPX[first_wp]
+        WPY_Trig = arr_WPY[first_wp]
+        math.floor(WPX_Trig)
+        math.floor(WPY_Trig)
+        
+        relativeX = WPX_Trig - worldX
+        relativeY = WPY_Trig - worldY
+        relativeHyp = math.sqrt(relativeX^2+relativeY^2)
+        des_heading = math.asin(relativeX/relativeHyp)
+        des_heading = des_heading * 180/math.pi
+        if des_heading < 0 then
+            des_heading = des_heading+360
+        end
+    end
 
     --Set Outputs
     output.setNumber(14, cycles)
     output.setNumber(15, des_heading)
+    output.setNumber(16, WPX_Trig)
+    output.setNumber(17, WPY_Trig)
 end
 
 function onDraw()
@@ -73,16 +86,16 @@ function onDraw()
         i = 0
         for i=0, cycles-1 do
             pixelWPX, pixelWPY = map.mapToScreen(x_off+worldX, y_off+worldY, zoom, 64, 64, arr_WPX[i], arr_WPY[i])
-            --Draw Circle
-            screen.setColor(200,20,20)
-            screen.drawCircle(pixelWPX, pixelWPY, circle_size)
-            --Draw Line
             if i == 0 then
                 i = i + 1
             else
                 i2 = i - 1
+                --Draw Line
                 pixelWPX2, pixelWPY2 = map.mapToScreen(x_off+worldX, y_off+worldY, zoom, 64, 64, arr_WPX[i2], arr_WPY[i2])
                 screen.drawLine(pixelWPX, pixelWPY, pixelWPX2, pixelWPY2)
+                --Draw Circle
+                screen.setColor(200,20,20)
+                screen.drawCircle(pixelWPX, pixelWPY, circle_size)
                 i = i + 1
             end
         end
