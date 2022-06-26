@@ -133,7 +133,7 @@ function onDraw()
 
     target_ratio = target_length/winch_max
     target_ratio = target_ratio * 28
-    setC(255,127,39)
+    setC(255,50,12)
     screen.drawRectF(24, 2, 7, target_ratio)
 end
 
