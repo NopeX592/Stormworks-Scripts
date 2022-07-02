@@ -12,6 +12,7 @@ winch_up_but = false
 winch_down_but = false
 function onTick()
     increment = property.getNumber("Counter Increment")
+    dead_zone = property.getNumber("Winch Deadzone")
 
     isP = input.getBool(1)
 
@@ -62,14 +63,23 @@ function onTick()
     winch_length_comp = math.floor(winch_length_comp)
     winch_length_comp = winch_length_comp/10
 
-    if target_length_comp > winch_length_comp then
+    length_diff = target_length - winch_length
+    length_diff = length_diff*10
+    length_diff = math.floor(length_diff)
+    length_diff = length_diff/10
+    length_diff = math.abs(length_diff)
+
+    if ((target_length_comp < dead_zone) and (winch_length_comp < dead_zone)) then    
+        winch_Up = false
+        winch_Down = false    
+    elseif length_diff < dead_zone then
+        winch_Up = false
+        winch_Down = false
+    elseif target_length_comp > winch_length_comp then
         winch_Up = false
         winch_Down = true
     elseif target_length_comp < winch_length_comp then
         winch_Up = true
-        winch_Down = false
-    else
-        winch_Up = false
         winch_Down = false
     end
     --Set Outputs
