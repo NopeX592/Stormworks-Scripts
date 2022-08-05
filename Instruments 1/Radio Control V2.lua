@@ -6,12 +6,29 @@ frequency4 = 0
 
 function onTick()
     isP = input.getBool(1)
-    isReceiving = input.getBool(3)
 
     signal_strength = input.getNumber(1)
     
     inX = input.getNumber(3)
     inY = input.getNumber(4)
+
+    isPR1 = isP and isInRect(2, 13, 6, 6, inX, inY)
+    isPR2 = isP and isInRect(9, 13, 6, 6, inX, inY)
+    isPR3 = isP and isInRect(16, 13, 6, 6, inX, inY)
+    isPR4 = isP and isInRect(23, 13, 6, 6, inX, inY)
+
+    if isPR1 then
+        frequency1 = 0
+    end
+    if isPR2 then
+        frequency2 = 0
+    end
+    if isPR3 then
+        frequency3 = 0
+    end
+    if isPR4 then
+        frequency4 = 0
+    end
 
     freq = "wxyz"
 
@@ -122,6 +139,20 @@ function onDraw()
     end
     if isPD4 then
         screen.drawRectF(23, 23, 6, 6)
+    end
+
+    setC(0,0,255)
+    if isPR1 then
+        screen.drawRectF(2, 13, 6, 6)
+    end
+    if isPR2 then
+        screen.drawRectF(9, 13, 6, 6)
+    end
+    if isPR3 then
+        screen.drawRectF(16, 13, 6, 6)
+    end
+    if isPR4 then
+        screen.drawRectF(23, 13, 6, 6)
     end
 
     setC(255,255,255)
