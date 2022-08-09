@@ -1,7 +1,7 @@
 function onTick()
 	fuel_level = input.getNumber(1)
     fuel_capacity = input.getNumber(2)
-	fuel_consumption= input.getNumber(3)
+	fuel_consumption = input.getNumber(3)
 
 	hrs = math.floor(fuel_consumption+0.5)/3600
 	round = hrs % 0.001
