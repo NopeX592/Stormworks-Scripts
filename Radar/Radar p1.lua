@@ -8,7 +8,7 @@ function onTick()
 	isPressed = input.getBool(1)
 
     off_button = input.getBool(3)
-    max_range = input.getNumber(7)
+    max_range = property.getNumber("Max Distance")
 
     --Range Buttons
     isPressingRangeMinus = isPressed and isPointInRectangle(inputX, inputY, 0, 0, w/2, h)

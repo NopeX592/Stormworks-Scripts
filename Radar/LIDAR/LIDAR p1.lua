@@ -5,8 +5,8 @@ function onTick()
     off_button = input.getBool(1)
 
     distance = input.getNumber(1)
-    rotation = input.getNumber(5) * 4
-    rotation_Draw = input.getNumber(5)
+    rotation = input.getNumber(2) * 4
+    rotation_Draw = input.getNumber(2)
 
     if off_button then
         if math.abs(rotation) >= math.abs(sweep_angle) - 0.01 then
