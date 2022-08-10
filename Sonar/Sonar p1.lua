@@ -36,13 +36,6 @@ function onTick()
 end
 
 function onDraw()
-    --Draw Circle
-    screen.setColor(0,255,0)
-    screen.drawCircle(w/2-0.5, h/2-0.5, 15.5)
-    screen.setColor(0,255,0,75)
-    screen.drawCircle(w/2-0.5, h/2-0.5, 10.5)
-    screen.drawCircle(w/2-0.5, h/2-0.5, 5)
-
     --Draw Range
     screen.setColor(255,255,255)
     text_range = set_range/100
