@@ -71,7 +71,7 @@ function onDraw()
     cy = h/2
 
     if D.x then
-		screen.setColor(20,20,20,50)
+		screen.setColor(50,50,50,50)
 		for i,v in ipairs(C) do
 			if i==pc1 or i==pc2 or i==pc3 then
 				x,y=map.mapToScreen(x_off+mcx,y_off+mcy,zoom,w,h,v.x,v.y)
@@ -84,6 +84,7 @@ function onDraw()
 		screen.drawCircle(x,y,counter)
 		screen.setColor(90,10,10,50)
 		screen.drawCircleF(x,y,(D.p+100)*0.001*h/zoom)
+		screen.drawLine(cx, cy, x, y)
 	else
 		if C[1] then
 			text1="loading"
