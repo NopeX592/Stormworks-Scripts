@@ -2,6 +2,7 @@ zoom = -0.5
 x_off = 0
 y_off = 0
 circle_size = 3
+distance_WP = 10000000000000000000000
 
 cycles = 0
 
@@ -25,7 +26,6 @@ function onTick()
     zoom = input.getNumber(11)
     worldWPX = input.getNumber(12)
     worldWPY = input.getNumber(13)
-    distance_WP = input.getNumber(14)
 
     --Reset
     if isPressingReset then
@@ -62,6 +62,25 @@ function onTick()
     --Set starting position
     arr_WPX[0] = worldX
     arr_WPY[0] = worldY
+    
+    --Calculate Relative Position
+    if cycles >= 2 then
+        first_wp = 1
+
+        WPX_Trig = arr_WPX[first_wp]
+        WPY_Trig = arr_WPY[first_wp]
+        math.abs(WPX_Trig)
+        math.abs(WPY_Trig)
+        
+        relativeX = WPX_Trig - worldX
+        relativeY = WPY_Trig - worldY
+
+        distance_WP = relativeX^2+relativeY^2
+        distance_WP = math.sqrt(distance_WP)
+    else
+        relativeX = 0 - worldX
+        relativeY = 0 - worldY
+    end
 
     --Check Waypoint Completion and Remove Waypoints from Array
     if distance_WP < completion_radius then
@@ -73,28 +92,10 @@ function onTick()
         WP_reached = false
     end
 
-    --Calculate Relative Position
-    if cycles >= 2 then
-        first_wp = 1
-
-        WPX_Trig = arr_WPX[first_wp]
-        WPY_Trig = arr_WPY[first_wp]
-        math.floor(WPX_Trig)
-        math.floor(WPY_Trig)
-        
-        relativeX = WPX_Trig - worldX
-        relativeY = WPY_Trig - worldY
-    else
-        relativeX = 0 - worldX
-        relativeY = 0 - worldY
-    end
-
     --Set Outputs
     output.setNumber(14, cycles)
     output.setNumber(15, relativeX)
     output.setNumber(16, relativeY)
-    output.setNumber(17, WPX_Trig)
-    output.setNumber(18, WPY_Trig)
 
     output.setBool(1, WP_reached)
 end
