@@ -18,7 +18,6 @@ function onTick()
     isPressingReset = input.getBool(4)
     isPressingBack = input.getBool(5)
     isStarting = input.getBool(6)
-    autoSkip = input.getBool(7)
 
     worldX = input.getNumber(7)
     worldY = input.getNumber(8)
@@ -116,26 +115,13 @@ function onTick()
 
     --Check Waypoint Completion
     if isStarting then
-        if not autoSkip then
-            if dist_WP < compl_radius then
-                WP_reached = true
-                table.remove(arr_WPX, 1)
-                table.remove(arr_WPY, 1)
-                cycle = cycle - 1
-            else
-                WP_reached = false
-            end
-        elseif autoSkip then
-            if dist_WP < compl_radius then
-                table.remove(arr_WPX, 1)
-                table.remove(arr_WPY, 1)
-                cycle = cycle - 1
-                if cycle < 1 then
-                    WP_reached = true
-                end
-            else
-                WP_reached = false
-            end
+        if dist_WP < compl_radius then
+            WP_reached = true
+            table.remove(arr_WPX, 1)
+            table.remove(arr_WPY, 1)
+            cycle = cycle - 1
+        else
+            WP_reached = false
         end
     end
     
