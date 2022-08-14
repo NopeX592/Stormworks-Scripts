@@ -11,26 +11,23 @@ function onTick()
 
     worldX = input.getNumber(7)
     worldY = input.getNumber(8)
-    cycles = input.getNumber(14)
 
+	--Back
     if not (isPressingBack) then
         isLocked = false
     end
 
-    --Reset
-    isPressingReset = isPressed and isPntInRect(inputX, inputY, 0, 49, button_size, button_size)
-	--Back
     backPressed = false
     isPressingBack = isPressed and isPntInRect(inputX, inputY, 12, 49, button_size, button_size)
     if not isLocked then
-        isLocked = true
         if isPressingBack then
             backPressed = true
         end
+        isLocked = true
     end
 
-    --Start Autopilot
-    isPressingStart = isPressed and isPntInRect(inputX, inputY, 6, 43, button_size, button_size)
+    --Reset
+    isPressingReset = isPressed and isPntInRect(inputX, inputY, 0, 49, button_size, button_size)
 
     --Center
     isPressingCenter = isPressed and isPntInRect(inputX, inputY, 6, 55, button_size, button_size)
@@ -80,16 +77,7 @@ function onTick()
     output.setNumber(10, y_off)
     output.setNumber(11, zoom)
 
-    output.setBool(3, isPressingStart)
-    output.setBool(4, isPressingReset)
-    output.setBool(5, backPressed)
-
-    if cycles == 0 then
-        worldWPX = worldX
-        worldWPY = worldY
-    end
-
-    if isPressed and (not (isPressingReset or isPressingBack or isPressingStart or isPressingCenter or isPressingZoomIn or isPressingZoomOut or isPressingXPlus or isPressingXMinus or isPressingYPlus or isPressingYMinus)) then
+    if isPressed and (not (isPressingReset or isPressingBack or isPressingCenter or isPressingZoomIn or isPressingZoomOut or isPressingXPlus or isPressingXMinus or isPressingYPlus or isPressingYMinus)) then
         worldWPX, worldWPY = map.screenToMap(x_off+worldX, y_off+worldY, zoom, 64, 64, inputX, inputY)
         output.setNumber(12, worldWPX)
         output.setNumber(13, worldWPY)
