@@ -82,6 +82,8 @@ function onTick()
         output.setNumber(12, worldWPX)
         output.setNumber(13, worldWPY)
     end
+    output.setBool(4, isPressingReset)
+    output.setBool(5, backPressed)
 end
 
 function isPntInRect(x, y, rectX, rectY, rectW, rectH)
