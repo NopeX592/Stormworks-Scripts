@@ -1,5 +1,3 @@
-w = 32
-h = 32
 set_range = -35000
 
 function onTick()
@@ -45,19 +43,21 @@ function onTick()
 end
 
 function onDraw()
+    w = screen.getWidth()
+    h = screen.getHeight()
     --Draw Range
     screen.setColor(255,255,255)
     text_range = set_range/100
     text_range = math.floor(text_range)
     text_range = text_range/10
-    screen.drawTextBox(0, 26, 24, 6, text_range, -1, 0)
+    screen.drawTextBox(0, h-6, w-8, 6, text_range, -1, 0)
 
     --Draw Circles
     screen.setColor(0,255,0)
-    screen.drawCircle(w/2-0.5, h/2-0.5, 15.5)
+    screen.drawCircle(w/2-0.5, h/2-0.5, (w-1)*0.5)
     screen.setColor(0,255,0,75)
-    screen.drawCircle(w/2-0.5, h/2-0.5, 10.5)
-    screen.drawCircle(w/2-0.5, h/2-0.5, 5)
+    screen.drawCircle(w/2-0.5, h/2-0.5, (w-1)*0.3)
+    screen.drawCircle(w/2-0.5, h/2-0.5, (w-1)*0.15)
 end
 
 function isPointInRectangle(x, y, rectX, rectY, rectW, rectH)

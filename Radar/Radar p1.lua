@@ -1,5 +1,3 @@
-w = 32
-h = 32
 set_range = 0
 
 function onTick()
@@ -33,10 +31,12 @@ function onTick()
 end
 
 function onDraw()
+    w = screen.getWidth()
+	h = screen.getHeight()
     text_range = set_range/100
     text_range = math.floor(text_range)
     text_range = text_range/10
-    screen.drawTextBox(0, 26, 24, 6, text_range, -1, 0)
+    screen.drawTextBox(0, h-6, w-8, 6, text_range, -1, 0)
 end
 
 function isPointInRectangle(x, y, rectX, rectY, rectW, rectH)
