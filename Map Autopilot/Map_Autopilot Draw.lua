@@ -38,8 +38,8 @@ function onDraw()
     screen.setColor(0,0,0)
     worldXRnd = math.floor(worldX)
     worldYRnd = math.floor(worldY)
-    screen.drawTextBox(1, 1, 28, button_size, math.floor(worldXRnd), -1, 0)
-    screen.drawTextBox(31, 1, 28, button_size, math.floor(worldYRnd), -1, 0)
+    screen.drawTextBox(1, 5, 28, button_size, math.floor(worldXRnd), -1, 0)
+    screen.drawTextBox(31, 5, 28, button_size, math.floor(worldYRnd), -1, 0)
 
     --Draw Zoom
     screen.setColor(0,0,0)
