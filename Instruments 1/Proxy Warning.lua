@@ -59,13 +59,24 @@ function onDraw()
 
             --Draw Distances
             screen.setColor(0,255,0)
-            screen.drawTextBox(w/2-8, 1, 16, 6, distanceF, 0, 0)
-            screen.drawTextBox(1, h*0.25, 16, 6, distanceFL, 1, 0)
-            screen.drawTextBox(w-17, h*0.25, 16, 6, distanceFR, -1, 0)
-
-            screen.drawTextBox(w/2-8, h-13, 16, 6, distanceR, 0, 0)
-            screen.drawTextBox(1, h*0.75, 16, 6, distanceRL, 1, 0)
+            if (distanceF < engage_range*2) then    
+                screen.drawTextBox(w/2-8, 1, 16, 6, distanceF, 0, 0)
+            end
+            if (distanceFL < engage_range*2) then
+                screen.drawTextBox(1, h*0.25, 16, 6, distanceFL, 1, 0)
+            end
+            if (distanceFR < engage_range*2) then
+                screen.drawTextBox(w-17, h*0.25, 16, 6, distanceFR, -1, 0)
+            end
+            if (distanceR < engage_range*2) then
+                screen.drawTextBox(w/2-8, h-13, 16, 6, distanceR, 0, 0)
+            end
+            if (distanceRL < engage_range*2) then
+                screen.drawTextBox(1, h*0.75, 16, 6, distanceRL, 1, 0)
+            end
+            if (distanceRR < engage_range*2) then
             screen.drawTextBox(w-17, h*0.75, 16, 6, distanceRR, -1, 0)
+            end
 
             --Draw Exclamation Mark
             screen.setColor(255,0,0)
